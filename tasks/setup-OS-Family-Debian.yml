@@ -1,0 +1,52 @@
+---
+- name: Install gnupg2 if not present
+  apt:
+    name:
+      - gnupg2
+    state: present
+    update_cache: yes
+  when: "'gnupg2' not in required_packages_check.ansible_facts.packages"
+
+- name: Install software-properties-common if not present
+  apt:
+    name:
+      - software-properties-common
+    state: present
+    update_cache: yes
+  when: "'software-properties-common' not in required_packages_check.ansible_facts.packages"
+
+- name: Add Jfrog Apt Key for Java
+  apt_key:
+    url: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+    state: present
+
+- name: Add JFrog Deb Repo for Java
+  apt_repository:
+    repo: "deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ {{ ansible_distribution_release }} main"
+    state: present
+
+- name: Install Java from JFrog
+  apt:
+    name:
+      - "{{ adopt_open_jdk_version }}"
+    state: present
+    update_cache: yes
+
+- name: Cleanup gnupg2 package if it was installed to support java role
+  apt:
+    name:
+      - gnupg2
+    state: absent
+  when: "'gnupg2' not in required_packages_check.ansible_facts.packages"
+
+- name: Cleanup software-properties-common package if it was installed to support java role
+  apt:
+    name:
+      - software-properties-common
+    state: absent
+  when: "'software-properties-common' not in required_packages_check.ansible_facts.packages"
+
+- name: Remove JFrog Deb Repo for Java
+  apt_repository:
+    repo: "deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ {{ ansible_distribution_release }} main"
+    state: absent

@@ -1,0 +1,25 @@
+---
+- name: Add JFrog YUM Repo for Java
+  yum_repository:
+    name: AdoptOpenJDK
+    baseurl: http://adoptopenjdk.jfrog.io/adoptopenjdk/rpm/centos/$releasever/$basearch
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+    state: present
+
+- name: Install Java from JFrog
+  apt:
+    name:
+      - "{{ adopt_open_jdk_version }}"
+    state: present
+    update_cache: yes
+
+- name: Remove JFrog YUM Repo for Java
+  yum_repository:
+    name: AdoptOpenJDK
+    baseurl: http://adoptopenjdk.jfrog.io/adoptopenjdk/rpm/centos/$releasever/$basearch
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+    state: absent

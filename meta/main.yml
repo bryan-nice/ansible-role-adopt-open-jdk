@@ -1,0 +1,29 @@
+---
+dependencies: []
+
+galaxy_info:
+  author:
+  description: AdoptOpenJDK Java for Linux.
+  company: "Senzing"
+  license: "Apache 2"
+  min_ansible_version: 2.9
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Fedora
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+        - focal
+  galaxy_tags:
+    - java
+    - adopt-open-jdk

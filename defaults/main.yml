@@ -1,0 +1,3 @@
+---
+# defaults file for adopt-open-jdk
+adopt_open_jdk_version: adoptopenjdk-8-hotspot

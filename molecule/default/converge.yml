@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    adopt_open_jdk_version: adoptopenjdk-11-hotspot
+  pre_tasks:
+    - name: Gather package facts
+      package_facts:
+        manager: auto
+  roles:
+    - role: adopt-open-jdk
+      when: "'{ adopt_open_jdk_version }' not in ansible_facts.packages"
